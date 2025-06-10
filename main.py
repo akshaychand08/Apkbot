@@ -32,7 +32,7 @@ if __name__ == '__main__':
     import asyncio
 
     async def run():
-        await application.bot.set_webhook(f"https://your-koyeb-app.koyeb.app/{BOT_TOKEN}")
+        await application.bot.set_webhook(f"https://growing-patricia-akshaychand12-243643d5.koyeb.app/{BOT_TOKEN}")
         await application.initialize()
         await application.start()
         app.run(host="0.0.0.0", port=8080)
