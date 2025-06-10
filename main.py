@@ -1,11 +1,12 @@
 from flask import Flask, request
-from telegram import Bot, Update
+from telegram import Update, Bot
+from telegram.ext import ApplicationBuilder
 from config import BOT_TOKEN, PORT
 from bot import setup_dispatcher
 
 app = Flask(__name__)
-bot = Bot(token=BOT_TOKEN)
-dispatcher = setup_dispatcher(bot)
+application = ApplicationBuilder().token(BOT_TOKEN).build()
+setup_dispatcher(application)
 
 @app.route('/')
 def home():
@@ -13,10 +14,10 @@ def home():
 
 @app.route(f'/{BOT_TOKEN}', methods=['POST'])
 def webhook():
-    update = Update.de_json(request.get_json(force=True), bot)
-    dispatcher.process_update(update)
+    update = Update.de_json(request.get_json(force=True), application.bot)
+    application.update_queue.put_nowait(update)
     return "OK", 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=PORT)
-  
+    
