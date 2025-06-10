@@ -4,17 +4,18 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder
 from bot import setup_dispatcher
 
-# ✅ Correctly get from environment
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 PORT = int(os.environ.get("PORT", 8080))
 
 if not BOT_TOKEN:
     raise ValueError("🚨 BOT_TOKEN not set! Add it as an environment variable.")
 
-# Setup Flask app
 app = Flask(__name__)
 application = ApplicationBuilder().token(BOT_TOKEN).build()
 setup_dispatcher(application)
+
+# ✅ Set the webhook
+application.bot.set_webhook(url=f"https://growing-patricia-akshaychand12-243643d5.koyeb.app/{BOT_TOKEN}")
 
 @app.route('/')
 def home():
