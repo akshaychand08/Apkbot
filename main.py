@@ -1,4 +1,5 @@
 import os
+import asyncio
 from flask import Flask, request
 from telegram import Update
 from telegram.ext import ApplicationBuilder
@@ -10,12 +11,18 @@ PORT = int(os.environ.get("PORT", 8080))
 if not BOT_TOKEN:
     raise ValueError("🚨 BOT_TOKEN not set! Add it as an environment variable.")
 
+# Flask app
 app = Flask(__name__)
 application = ApplicationBuilder().token(BOT_TOKEN).build()
 setup_dispatcher(application)
 
-# ✅ Set the webhook
-application.bot.set_webhook(url=f"https://growing-patricia-akshaychand12-243643d5.koyeb.app/{BOT_TOKEN}")
+# ✅ Set webhook correctly (with asyncio)
+async def set_webhook():
+    await application.bot.set_webhook(
+        url=f"https://growing-patricia-akshaychand12-243643d5.koyeb.app/{BOT_TOKEN}"
+    )
+
+asyncio.run(set_webhook())
 
 @app.route('/')
 def home():
