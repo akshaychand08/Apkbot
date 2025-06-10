@@ -1,5 +1,5 @@
 from flask import Flask, request
-from telegram import Update, Bot
+from telegram import Update
 from telegram.ext import ApplicationBuilder
 from config import BOT_TOKEN, PORT
 from bot import setup_dispatcher
