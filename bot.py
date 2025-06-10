@@ -1,19 +1,17 @@
 from telegram import Update
-from telegram.ext import CommandHandler, MessageHandler, filters, Dispatcher, ContextTypes
-import requests
-from bs4 import BeautifulSoup
+from telegram.ext import CommandHandler, MessageHandler, filters, ContextTypes
 
-# /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("🤖 Welcome to the All-in-One APK Bot!\nType any app name to search.")
 
-# Main search logic
 async def search_apk(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.message.text
     results = []
 
     # APKPure
     try:
+        import requests
+        from bs4 import BeautifulSoup
         url = f"https://apkpure.com/search?q={query.replace(' ', '+')}"
         soup = BeautifulSoup(requests.get(url).text, 'html.parser')
         items = soup.find_all('div', class_='search-dl')[:2]
@@ -48,9 +46,7 @@ async def search_apk(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("❌ Nothing found.")
 
-# Dispatcher setup
 def setup_dispatcher(application):
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, search_apk))
-    return application
     
