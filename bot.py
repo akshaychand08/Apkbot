@@ -1,12 +1,14 @@
 from telegram import Update
-from telegram.ext import CommandHandler, MessageHandler, Filters, Dispatcher
+from telegram.ext import CommandHandler, MessageHandler, filters, Dispatcher, ContextTypes
 import requests
 from bs4 import BeautifulSoup
 
-def start(update, context):
-    update.message.reply_text("🤖 Welcome to the All-in-One APK Bot!\nType any app name to search.")
+# /start command
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("🤖 Welcome to the All-in-One APK Bot!\nType any app name to search.")
 
-def search_apk(update, context):
+# Main search logic
+async def search_apk(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.message.text
     results = []
 
@@ -42,13 +44,13 @@ def search_apk(update, context):
 
     if results:
         for r in results:
-            update.message.reply_text(r, disable_web_page_preview=True)
+            await update.message.reply_text(r, disable_web_page_preview=True)
     else:
-        update.message.reply_text("❌ Nothing found.")
+        await update.message.reply_text("❌ Nothing found.")
 
-def setup_dispatcher(bot):
-    dp = Dispatcher(bot, None, workers=0, use_context=True)
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, search_apk))
-    return dp
-  
+# Dispatcher setup
+def setup_dispatcher(application):
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, search_apk))
+    return application
+    
