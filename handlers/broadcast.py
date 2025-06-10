@@ -3,7 +3,7 @@ from telegram import Update
 from core.mongo import users_col
 
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.effective_user.id != 123456789:  # Replace with your admin ID
+    if update.effective_user.id != 5721673207:  # Replace with your admin ID
         return
 
     message = " ".join(context.args)
