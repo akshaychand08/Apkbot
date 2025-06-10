@@ -1,9 +1,17 @@
+import os
 from flask import Flask, request
 from telegram import Update
 from telegram.ext import ApplicationBuilder
-from config import BOT_TOKEN, PORT
 from bot import setup_dispatcher
 
+# ✅ Safely get from environment
+BOT_TOKEN = os.environ.get("7823889476:AAFfu6gnn91hhlcrQdrYe2z6nqt7d9iBanc")
+PORT = int(os.environ.get("PORT", 8080))
+
+if not BOT_TOKEN:
+    raise ValueError("🚨 BOT_TOKEN not set! Add it as an environment variable.")
+
+# Setup app
 app = Flask(__name__)
 application = ApplicationBuilder().token(BOT_TOKEN).build()
 setup_dispatcher(application)
@@ -20,4 +28,3 @@ def webhook():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=PORT)
-    
