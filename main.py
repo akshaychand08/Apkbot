@@ -1,20 +1,16 @@
-# main.py
-from flask import Flask, request
-from telegram import Update
-from telegram.ext import Application
 import logging
+from flask import Flask, request
+from telegram import Update, Bot
+from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
-from core.config import BOT_TOKEN
 from handlers import setup_handlers
+from config import BOT_TOKEN
 
-# Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Flask
 app = Flask(__name__)
 
-# Telegram bot app
 application = Application.builder().token(BOT_TOKEN).build()
 setup_handlers(application)
 
@@ -25,16 +21,15 @@ def webhook():
     return "OK"
 
 @app.route("/")
-def index():
+def home():
     return "Bot is running."
 
-if __name__ == '__main__':
+async def set_webhook():
+    webhook_url = f"https://growing-patricia-akshaychand12-243643d5.koyeb.app/{BOT_TOKEN}"
+    await application.bot.set_webhook(webhook_url)
+
+if __name__ == "__main__":
     import asyncio
-
-    async def run():
-        await application.bot.set_webhook(f"https://growing-patricia-akshaychand12-243643d5.koyeb.app/{BOT_TOKEN}")
-        await application.initialize()
-        await application.start()
-        app.run(host="0.0.0.0", port=8080)
-
-    asyncio.run(run())
+    asyncio.run(set_webhook())
+    app.run(host="0.0.0.0", port=8080)
+    
