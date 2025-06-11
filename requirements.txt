@@ -1,4 +1,5 @@
+python-telegram-bot[webhooks]>=20.3
 flask
-pymongo
 httpx
-python-telegram-bot[webhooks]==20.6
+bs4
+pymongo
