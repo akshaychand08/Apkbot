@@ -1,13 +1,12 @@
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-from config import LOG_CHANNEL_ID, UPDATE_CHANNEL_ID
+from config import LOG_CHANNEL_ID
 
 async def start(update, context):
     user = update.effective_user
     keyboard = [
         [InlineKeyboardButton("ℹ️ About", callback_data="about")],
-        [InlineKeyboardButton("🚀 Bot Features", callback_data="features")],
-        [InlineKeyboardButton("📢 Join Channel", url=f"https://t.me/{UPDATE_CHANNEL_ID.replace('@', '')}")]
+        [InlineKeyboardButton("🚀 Bot Features", callback_data="features")]
     ]
     await update.message.reply_text(
         "👋 Welcome to the Ultimate AI Bot!",
