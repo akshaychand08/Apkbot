@@ -6,6 +6,7 @@ HEADERS = {
                   "AppleWebKit/537.36 (KHTML, like Gecko) "
                   "Chrome/113.0.0.0 Safari/537.36"
 }
+
 async def search_apk(query):
     results = []
 
@@ -13,18 +14,15 @@ async def search_apk(query):
         # APKPure 
         try:
             url1 = f"https://apkpure.com/search?q={query}"
-            resp1 = await client.get(url1, headers=headers)
+            resp1 = await client.get(url1, headers=HEADERS)
             print("APKPure status:", resp1.status_code)
             html1 = resp1.text
 
             if resp1.status_code != 200:
                 print("APKPure non-200 status, HTML:", html1[:500])
             else:
-                # Debug first 500 characters to inspect structure
                 print("APKPure HTML snippet:", html1[:500])
-
                 soup1 = BeautifulSoup(html1, "html.parser")
-                # Try multiple selectors:
                 sel1 = soup1.select(".search-list .card a.title")
                 sel2 = soup1.select(".search-title a")
                 sel3 = soup1.select("a[href*='/'][class]")
@@ -43,7 +41,7 @@ async def search_apk(query):
         # GetIntoPC 
         try:
             url2 = f"https://getintopc.com/full-search/?q={query}"
-            resp2 = await client.get(url2, headers=headers)
+            resp2 = await client.get(url2, headers=HEADERS)
             print("GetIntoPC status:", resp2.status_code)
 
             if resp2.status_code == 200:
@@ -60,7 +58,7 @@ async def search_apk(query):
         # FileCR 
         try:
             url3 = f"https://filecr.com/?s={query}"
-            resp3 = await client.get(url3, headers=headers)
+            resp3 = await client.get(url3, headers=HEADERS)
             print("FileCR status:", resp3.status_code)
 
             if resp3.status_code == 200:
@@ -75,3 +73,4 @@ async def search_apk(query):
             results.append("FileCR error: " + str(e))
 
     return results or ["❌ No results found."]
+    
