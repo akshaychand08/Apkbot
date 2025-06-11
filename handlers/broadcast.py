@@ -7,10 +7,5 @@ async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     message = ' '.join(context.args)
     await update.message.reply_text(f"Broadcasting: {message}")
-    for user in context.bot_data.get("users", []):
-        try:
-            await context.bot.send_message(user, message)
-        except Exception:
-            pass
 
 broadcast_cmd = CommandHandler("broadcast", broadcast)
