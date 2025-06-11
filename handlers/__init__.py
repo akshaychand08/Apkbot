@@ -9,3 +9,4 @@ def setup_handlers(app):
     app.add_handler(broadcast_cmd)
     app.add_handler(admin_cmd)
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), verify_middleware))
+
