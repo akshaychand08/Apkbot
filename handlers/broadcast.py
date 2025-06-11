@@ -1,21 +1,16 @@
 from telegram.ext import CommandHandler, ContextTypes
 from telegram import Update
-from core.mongo import users_col
+from config import OWNER_ID
 
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.effective_user.id != 5721673207:  # Replace with your admin ID
+    if str(update.effective_user.id) != OWNER_ID:
         return
-
-    message = " ".join(context.args)
-    if not message:
-        await update.message.reply_text("Usage: /broadcast <message>")
-        return
-
-    users = users_col.find()
-    for user in users:
+    message = ' '.join(context.args)
+    await update.message.reply_text(f"Broadcasting: {message}")
+    for user in context.bot_data.get("users", []):
         try:
-            await context.bot.send_message(chat_id=user["user_id"], text=message)
+            await context.bot.send_message(user, message)
         except Exception:
-            continue
+            pass
 
 broadcast_cmd = CommandHandler("broadcast", broadcast)
