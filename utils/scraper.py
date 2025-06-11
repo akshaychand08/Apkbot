@@ -1,44 +1,37 @@
-# utils/scraper.py
 import httpx
 from bs4 import BeautifulSoup
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
 async def search_apk(query):
     results = []
-    buttons = []
 
-    # APKPure
-    url_apkpure = f"https://apkpure.com/search?q={query}"
+    # apkpure
+    url1 = f"https://apkpure.com/search?q={query}"
     async with httpx.AsyncClient() as client:
-        resp = await client.get(url_apkpure)
-        soup = BeautifulSoup(resp.text, "html.parser")
-        for a in soup.select(".search-title a")[:3]:
+        resp1 = await client.get(url1)
+        soup1 = BeautifulSoup(resp1.text, "html.parser")
+        for a in soup1.select(".search-title a")[:3]:
             name = a.text.strip()
             link = "https://apkpure.com" + a["href"]
-            buttons.append([InlineKeyboardButton(name, url=link)])
+            results.append(f"📱 {name}: {link}")
 
-    # FileCR
-    url_filecr = f"https://filecr.com/?s={query}"
+    # getintopc
+    url2 = f"https://getintopc.com/full-search/?q={query}"
     async with httpx.AsyncClient() as client:
-        resp = await client.get(url_filecr)
-        soup = BeautifulSoup(resp.text, "html.parser")
-        for a in soup.select(".post-box-title a")[:3]:
+        resp2 = await client.get(url2)
+        soup2 = BeautifulSoup(resp2.text, "html.parser")
+        for a in soup2.select(".post-title a")[:2]:
             name = a.text.strip()
             link = a["href"]
-            buttons.append([InlineKeyboardButton(name, url=link)])
+            results.append(f"💻 {name}: {link}")
 
-    # GetIntoPC
-    url_getinto = f"https://getintopc.com/?s={query}"
+    # filecr
+    url3 = f"https://filecr.com/?s={query}"
     async with httpx.AsyncClient() as client:
-        resp = await client.get(url_getinto)
-        soup = BeautifulSoup(resp.text, "html.parser")
-        for a in soup.select("h2.post-box-title a")[:3]:
+        resp3 = await client.get(url3)
+        soup3 = BeautifulSoup(resp3.text, "html.parser")
+        for a in soup3.select(".post-title a")[:2]:
             name = a.text.strip()
             link = a["href"]
-            buttons.append([InlineKeyboardButton(name, url=link)])
+            results.append(f"🗂️ {name}: {link}")
 
-    if not buttons:
-        return ["No results found."], None
-
-    return ["🔍 Search Results:"], InlineKeyboardMarkup(buttons)
-  
+    return results or ["❌ No results found."]
