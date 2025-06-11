@@ -1,28 +1,15 @@
-from flask import Flask, request
-from telegram.ext import Application
+from telegram.ext import ApplicationBuilder
 from config import BOT_TOKEN, WEBHOOK_URL
 from handlers import setup_handlers
+from core.mongo import init_db
 
-app = Flask(__name__)
-
-application = Application.builder().token(BOT_TOKEN).build()
+application = ApplicationBuilder().token(BOT_TOKEN).build()
 setup_handlers(application)
+init_db()
 
-@app.route("/", methods=["GET"])
-def index():
-    return "Bot is running!"
-
-@app.route("/", methods=["POST"])
-def webhook():
-    update = request.get_json(force=True)
-    application.update_queue.put(update)
-    return "OK"
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     application.run_webhook(
         listen="0.0.0.0",
         port=8080,
-        webhook_url=WEBHOOK_URL,
+        webhook_url=WEBHOOK_URL
     )
-    app.run(host="0.0.0.0", port=8080)
-    
