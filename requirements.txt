@@ -1,0 +1,8 @@
+# requirements.txt
+python-telegram-bot[webhooks]>=20.3
+openai
+google-generativeai
+httpx
+pymongo
+flask
+telegraph
