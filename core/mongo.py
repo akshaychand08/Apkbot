@@ -5,5 +5,5 @@ client = None
 
 def init_db():
     global client
-    mongo_url = os.getenv("MONGO_URL", "mongodb+srv://iPapcorn:iPapcorn@cluster0.52lnvxn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    mongo_url = os.getenv("MONGO_URL", "mongodb+srv://AKirtibot:AKirtibot@cluster0.qtmdhrz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     client = MongoClient(mongo_url)
