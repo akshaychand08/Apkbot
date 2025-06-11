@@ -1,7 +1,9 @@
 from pymongo import MongoClient
-from config import MONGO_URI
+import os
 
-client = MongoClient(MONGO_URI)
-db = client["apkbot"]
-users_col = db["users"]
+client = None
 
+def init_db():
+    global client
+    mongo_url = os.getenv("MONGO_URL", "mongodb+srv://iPapcorn:iPapcorn@cluster0.52lnvxn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    client = MongoClient(mongo_url)
