@@ -1,5 +1,0 @@
-python-telegram-bot[webhooks]>=20.3
-flask
-httpx
-bs4
-pymongo
