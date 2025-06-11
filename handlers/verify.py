@@ -8,8 +8,12 @@ async def verify_middleware(update, context):
     chat_id = update.effective_chat.id
     member = await context.bot.get_chat_member(UPDATE_CHANNEL_ID, user.id)
 
-    if member.status in [ChatMemberStatus.LEFT, ChatMemberStatus.KICKED]:
+    if member.status in [ChatMemberStatus.LEFT, ChatMemberStatus.BANNED]:
         await update.message.reply_text("🚫 Please join our update channel first!")
+        return
+
+    if client is None:
+        await update.message.reply_text("❌ Database not initialized.")
         return
 
     db = client['apkbot']
