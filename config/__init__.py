@@ -13,7 +13,7 @@ WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://growing-patricia-akshaychand12-2
 #META_AI_URL = os.getenv("META_AI_URL", "https://your-meta-endpoint.com/v1/chat/completions")
 
 # Gemini / Google Generative AI
-GEMINI_KEY = os.getenv("GEMINI_KEY", "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")
+GEMINI_KEY = os.getenv("GEMINI_KEY", "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")
 
 # DeepSeek
 DEEPSEEK_KEY = os.getenv("DEEPSEEK_KEY", "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")
