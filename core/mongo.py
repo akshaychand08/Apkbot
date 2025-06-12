@@ -1,8 +1,7 @@
-import os
 from pymongo import MongoClient
-from config import MONGO_URL
-from datetime import datetime
+from config import os
 
+MONGO_URL = os.getenv("MONGO_URL")
 client = None
 
 def init_db():
@@ -12,12 +11,12 @@ def init_db():
 def get_user_data(user_id):
     db = client['ai_bot']
     user = db.users.find_one({"_id": user_id})
-    today = datetime.utcnow().date()
-    if not user or user.get('last_used') != str(today):
-        db.users.update_one({"_id": user_id}, {"$set": {"count": 0, "last_used": str(today)}}, upsert=True)
-        return {"count": 0, "last_used": str(today)}
     return user
 
-def increment_image_count(user_id):
+def save_user(user_id, username):
     db = client['ai_bot']
-    db.users.update_one({"_id": user_id}, {"$inc": {"count": 1}})
+    db.users.update_one(
+        {"_id": user_id},
+        {"$set": {"username": username}},
+        upsert=True
+    )
