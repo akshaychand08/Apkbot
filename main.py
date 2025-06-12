@@ -1,4 +1,3 @@
-# main.py
 from telegram.ext import ApplicationBuilder
 from config import BOT_TOKEN, WEBHOOK_URL
 from handlers import setup_handlers
