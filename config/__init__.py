@@ -9,7 +9,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", "7823889476:AAFnvcNQ1ptmshYLYhQbm2lPpkGqfb2BD
 WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://growing-patricia-akshaychand12-243643d5.koyeb.app")
 
 # OpenAI
-OPENAI_KEY = os.getenv("OPENAI_KEY", "your-openai-key")
+OPENAI_KEY = os.getenv("OPENAI_KEY", "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")
 
 # Gemini / Google Generative AI
 GEMINI_KEY = os.getenv("GEMINI_KEY", "AIzaSyB6idQAR_9tYkPDIJNoFUrN_Kb7ibJzz4w")
