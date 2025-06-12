@@ -1,5 +1,4 @@
 from .start import start_cmd
-from .image import image_cmd
 from telegram.ext import MessageHandler, filters
 from .ai_query import ai_query_handler
 
