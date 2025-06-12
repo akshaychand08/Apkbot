@@ -1,8 +1,6 @@
 import os
-from dotenv import load_dotenv
 
 # Load variables from .env file if present (for local dev)
-load_dotenv()
 
 # Telegram Bot
 BOT_TOKEN = os.getenv("BOT_TOKEN", "7823889476:AAFnvcNQ1ptmshYLYhQbm2lPpkGqfb2BDZs")
