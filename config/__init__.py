@@ -9,8 +9,8 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN", "7823889476:AAFnvcNQ1ptmshYLYhQbm2lPpkGqfb2BDZs")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://growing-patricia-akshaychand12-243643d5.koyeb.app")
 
-META_AI_KEY = os.getenv("META_AI_KEY", "your-meta-api-key")
-META_AI_URL = os.getenv("META_AI_URL", "https://your-meta-endpoint.com/v1/chat/completions")
+#META_AI_KEY = os.getenv("META_AI_KEY", "your-meta-api-key")
+#META_AI_URL = os.getenv("META_AI_URL", "https://your-meta-endpoint.com/v1/chat/completions")
 
 # Gemini / Google Generative AI
 GEMINI_KEY = os.getenv("GEMINI_KEY", "AIzaSyB6idQAR_9tYkPDIJNoFUrN_Kb7ibJzz4w")
