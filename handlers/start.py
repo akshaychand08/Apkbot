@@ -28,7 +28,7 @@ async def callback_handler(update, context):
             [InlineKeyboardButton("🔙 Back", callback_data="back"), InlineKeyboardButton("❌ Close", callback_data="close")]
         ]
         await query.edit_message_text(
-            "🤖 *About Bot:* This bot uses Meta AI, Gemini, and DeepSeek to answer your questions and generate images.",
+            "🤖 *About Bot:* This bot uses Gemini and DeepSeek to answer your questions and generate images.",
             reply_markup=InlineKeyboardMarkup(keyboard),
             parse_mode="Markdown"
         )
@@ -38,7 +38,7 @@ async def callback_handler(update, context):
             [InlineKeyboardButton("🔙 Back", callback_data="back"), InlineKeyboardButton("❌ Close", callback_data="close")]
         ]
         await query.edit_message_text(
-            "🚀 *Features:*\n- Ask anything\n- AI comparison\n- Image generation\n- Telegraph answers\n- Usage limits & tracking",
+            "🚀 *Features:*\n- Ask anything\n- Gemini + DeepSeek AI\n- Image generation\n- Telegraph answers\n- Usage limits & tracking",
             reply_markup=InlineKeyboardMarkup(keyboard),
             parse_mode="Markdown"
         )
