@@ -1,62 +1,36 @@
-from telegram.ext import CommandHandler, CallbackQueryHandler
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-from config import LOG_CHANNEL_ID
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ContextTypes, CommandHandler
 
-async def start(update, context):
-    user = update.effective_user
-    keyboard = [
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    buttons = [
         [InlineKeyboardButton("ℹ️ About", callback_data="about")],
-        [InlineKeyboardButton("🚀 Bot Features", callback_data="features")]
+        [InlineKeyboardButton("🚀 Features", callback_data="features")],
     ]
+    keyboard = InlineKeyboardMarkup(buttons)
     await update.message.reply_text(
-        "👋 Welcome to the Ultimate AI Bot!",
-        reply_markup=InlineKeyboardMarkup(keyboard)
+        "👋 Welcome to the Media & PDF Bot!\nUse the menu below to explore:",
+        reply_markup=keyboard
     )
 
-    try:
-        log_msg = f"👤 User Started: @{user.username or 'NoUsername'} ({user.id})"
-        await context.bot.send_message(chat_id=LOG_CHANNEL_ID, text=log_msg)
-    except Exception:
-        pass
-
-async def callback_handler(update, context):
+async def start_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
     if query.data == "about":
-        keyboard = [
-            [InlineKeyboardButton("🔙 Back", callback_data="back"), InlineKeyboardButton("❌ Close", callback_data="close")]
-        ]
         await query.edit_message_text(
-            "🤖 *About Bot:* This bot uses Gemini and DeepSeek to answer your questions and generate images.",
-            reply_markup=InlineKeyboardMarkup(keyboard),
-            parse_mode="Markdown"
+            "📦 This bot lets you:\n- Convert photos to PDF\n- Convert PDF to photos\n- Download high-quality videos\n\nEnjoy!",
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back", callback_data="start"), InlineKeyboardButton("❌ Close", callback_data="close")]])
         )
-
     elif query.data == "features":
-        keyboard = [
-            [InlineKeyboardButton("🔙 Back", callback_data="back"), InlineKeyboardButton("❌ Close", callback_data="close")]
-        ]
         await query.edit_message_text(
-            "🚀 *Features:*\n- Ask anything\n- Gemini + DeepSeek AI\n- Image generation\n- Telegraph answers\n- Usage limits & tracking",
-            reply_markup=InlineKeyboardMarkup(keyboard),
-            parse_mode="Markdown"
+            "🚀 Features:\n- YouTube/FB/Instagram download\n- PDF conversion\n- Archive uploads\n- Broadcast to users",
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back", callback_data="start"), InlineKeyboardButton("❌ Close", callback_data="close")]])
         )
-
-    elif query.data == "back":
-        keyboard = [
-            [InlineKeyboardButton("ℹ️ About", callback_data="about")],
-            [InlineKeyboardButton("🚀 Bot Features", callback_data="features")]
-        ]
-        await query.edit_message_text(
-            "👋 Welcome to the Ultimate AI Bot!",
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
-
+    elif query.data == "start":
+        await start(update, context)
     elif query.data == "close":
         await query.delete_message()
 
 start_cmd = [
     CommandHandler("start", start),
-    CallbackQueryHandler(callback_handler)
 ]
