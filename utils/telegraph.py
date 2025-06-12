@@ -9,4 +9,3 @@ def post_to_telegraph(title: str, content: str) -> str:
         html_content=content,
     )
     return f"https://telegra.ph/{response['path']}"
-
