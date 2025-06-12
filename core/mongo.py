@@ -17,7 +17,3 @@ def get_user_data(user_id):
         db.users.update_one({"_id": user_id}, {"$set": {"count": 0, "last_used": str(today)}}, upsert=True)
         return {"count": 0, "last_used": str(today)}
     return user
-
-def increment_image_count(user_id):
-    db = client['ai_bot']
-    db.users.update_one({"_id": user_id}, {"$inc": {"count": 1}})
