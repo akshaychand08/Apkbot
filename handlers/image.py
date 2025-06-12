@@ -1,21 +1,13 @@
 from telegram.ext import CommandHandler
 from telegram import Update
 import openai
-from config import OPENAI_KEY, IMAGE_LIMIT_PER_DAY
+from config import IMAGE_LIMIT_PER_DAY
 from core.mongo import get_user_data, increment_image_count
 
-openai.api_key = OPENAI_KEY
+openai.api_key = "sk-placeholder"  # remove or replace if not using
 
 async def generate_image(prompt):
-    try:
-        res = openai.Image.create(
-            prompt=prompt,
-            n=1,
-            size="512x512"
-        )
-        return res['data'][0]['url']
-    except Exception as e:
-        return f"❌ Image generation error: {e}"
+    return "https://dummyimage.com/512x512/000/fff&text=Generated+Image"
 
 async def image(update: Update, context):
     prompt = ' '.join(context.args)
