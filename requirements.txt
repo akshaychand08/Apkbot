@@ -1,6 +1,6 @@
 # requirements.txt
 python-telegram-bot[webhooks]>=20.3
-openai
+openai==0.28
 google-generativeai
 httpx
 pymongo
