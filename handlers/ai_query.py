@@ -1,4 +1,4 @@
-from ai_engines.chatgpt import ask_chatgpt
+from ai_engines.meta_ai import ask_meta_ai
 from ai_engines.gemini import ask_gemini
 from ai_engines.deepseek import ask_deepseek
 from utils.telegraph import post_to_telegraph
@@ -8,11 +8,11 @@ async def ai_query_handler(update, context):
     question = update.message.text
 
     try:
-        gpt_resp = await ask_chatgpt(question)
+        meta_resp = await ask_meta_ai(question)
         gemini_resp = await ask_gemini(question)
         deepseek_resp = await ask_deepseek(question)
 
-        content = f"<b>🤖 ChatGPT:</b><br>{gpt_resp}<br><br>"
+        content = f"<b>🤖 Meta AI:</b><br>{meta_resp}<br><br>"
         content += f"<b>🔮 Gemini:</b><br>{gemini_resp}<br><br>"
         content += f"<b>🧠 DeepSeek:</b><br>{deepseek_resp}"
 
