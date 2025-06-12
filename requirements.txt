@@ -1,7 +1,6 @@
-python-telegram-bot[webhooks]>=20.3
-httpx
+python-telegram-bot==20.7
+python-dotenv
 pymongo
-flask
-telegraph
-dotenv
-google-generativeai
+Pillow
+pdf2image
+yt-dlp
