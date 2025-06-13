@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from config import os
 
-MONGO_URL = os.getenv("MONGO_URL")
+MONGO_URL = os.getenv("mongodb+srv://AKirtibot:AKirtibot@cluster0.qtmdhrz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 client = None
 
 def init_db():
